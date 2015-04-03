@@ -1,36 +1,34 @@
 {
-  "name": "OpenShift-Nodejs-Cartridge",
-  "version": "1.1.0",
-  "description": "Node.js Cartridge for OpenShift",
+  "name": "fliuva",
+  "version": "0.1.0",
+  "description": "Fliuva - Analytics for complex software",
   "keywords": [
-    "OpenShift",
+    "analytics",
     "Node.js",
     "application",
     "openshift"
   ],
   "author": {
-    "name": "OpenShift",
-    "email": "ryanj@redhat.com",
-    "url":  "http://openshift.redhat.com/"
+    "name": "Adrián Arroyo Calle",
+    "email": "adrian.arroyocalle@gmail.com",
+    "url": "http://adrianarroyocalle.github.io"
   },
-  "homepage": "http://openshift.redhat.com/",
+  "homepage": "http://fliuva-divel.rhcloud.com",
   "repository": {
     "type": "git",
     "url": "https://gitub.com/openshift/nodejs-custom-version-openshift.git"
   },
-
   "engines": {
     "node": ">= 0.12.0",
     "npm": ">= 1.2.0"
   },
-
   "dependencies": {
-    "config-multipaas": "^0.1.0",
-    "restify": "^2.8.3"
+    "express": "~4.12.3",
+    "mysql": "~2.6.1",
+    "node-uuid": "~1.4.3"
   },
   "devDependencies": {},
   "bundleDependencies": [],
-
   "private": true,
   "scripts": {
     "start": "node server.js"

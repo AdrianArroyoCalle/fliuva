@@ -1,30 +1,32 @@
-var cc          = require('config-multipaas'),
-    restify     = require('restify'),
-    fs          = require('fs')
+var express=require("express");
+var mysql=require("mysql");
+var collect=require("./collect");
+var getdata=require("./getdata");
+var uuid=require("node-uuid");
 
-var config      = cc(),
-    app         = restify.createServer()
+var app=express();
 
-app.use(restify.queryParser())
-app.use(restify.CORS())
-app.use(restify.fullResponse())
+app.get("/collect",collect);
 
-// Routes
-app.get('/status', function (req, res, next)
-{
-  res.send("{status: 'ok'}");
+app.get("/get",getdata);
+
+app.get("/all",function(req,res){
+	var connection=mysql.createConnection({
+		host: process.env.OPENSHIFT_MYSQL_DB_HOST,
+		port: process.env.OPENSHIFT_MYSQL_DB_PORT,
+		user: process.env.OPENSHIFT_MYSQL_DB_USER,
+		password: process.env.OPENSHIFT_MYSQL_DB_PASSWORD,
+		database: "fliuva"
+	});
 });
 
-app.get('/', function (req, res, next)
-{
-  var data = fs.readFileSync(__dirname + '/index.html');
-  res.status(200);
-  res.header('Content-Type', 'text/html');
-  res.end(data.toString().replace(/host:port/g, req.header('Host')));
+app.get("/uuid",function(req,res){
+	res.send(uuid.v4());
 });
 
-app.get(/\/(css|js|img)\/?.*/, restify.serveStatic({directory: './static/'}));
+app.use(express.static("/","www"));
 
-app.listen(config.get('PORT'), config.get('IP'), function () {
-  console.log( "Listening on " + config.get('IP') + ", port " + config.get('PORT') )
-});
+var ip=process.env.OPENSHIFT_NODEJS_IP || process.env.OPENSHIFT_INTERNAL_IP || "127.0.0.1";
+var port=process.env.OPENSHIFT_NODEJS_PORT || process.env.OPENSHIFT_INTERNAL_PORT || 8080;
+
+var server=app.listen(port,ip);
