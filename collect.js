@@ -18,7 +18,7 @@ module.exports=function(req,res){
 		"TIME DATETIME, SESSION TEXT"+
 		")",function(err,results,fields){
 			if(err){
-				res.send(501,"MySQL table creation error");
+				res.send(501,"MySQL table creation error\n"+err);
 			}
 			connection.query("INSERT INTO EVENTS SET ?",{
 				SESSION: req.query.SESSION,
@@ -29,6 +29,9 @@ module.exports=function(req,res){
 				DESCRIPTION: req.query.DESCRIPTION || "",
 				DATA: req.query.DATA || ""
 			},function(err,results,fields){
+				if(err){
+					res.send(501,"Query error\n"+err);
+				}
 				res.send("OK");
 			});
 		});
