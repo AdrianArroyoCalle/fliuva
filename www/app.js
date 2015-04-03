@@ -19,7 +19,7 @@ function uniqBy(a, key) {
 function usersPerDay(){
 	var xhr=new XMLHttpRequest();
 	xhr.overrideMimeType("application/json");
-	xhr.open("GET","/getdata");
+	xhr.open("GET","/get");
 	xhr.addEventListener("load",function(){
 		var json=JSON.parse(xhr.responseText);
 		/*var data=json.filter(function(){
