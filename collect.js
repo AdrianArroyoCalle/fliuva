@@ -15,7 +15,7 @@ module.exports=function(req,res){
 		}
 		connection.query("CREATE TABLE IF NOT EXISTS EVENTS(ID INT NOT NULL AUTO_INCREMENT,"+
 		"CATEGORY TEXT, SUBCATEGORY TEXT, NAME TEXT, DESCRIPTION TEXT, DATA TEXT, "+
-		"TIME DATETIME, SESSION TEXT"+
+		"TIME DATETIME, SESSION TEXT,"+
 		"PRIMARY KEY (`ID`) )",function(err,results,fields){
 			if(err){
 				res.send(501,"MySQL table creation error\n"+err);
