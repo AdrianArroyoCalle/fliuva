@@ -26,7 +26,9 @@ function usersPerDay(){
 		/*var data=json.filter(function(){
 			
 		});*/
-		var array=uniqBy(json,"SESSION"); // Eventos de sesiones repetidas eliminados (mismos usuarios). Ahora tenemos sesiones únicas y tiempos distintos
+		var array=uniqBy(json,function(item){
+			return item.SESSION;
+		}); // Eventos de sesiones repetidas eliminados (mismos usuarios). Ahora tenemos sesiones únicas y tiempos distintos
 		for(var i=0;i<array.length;i++)
 		{
 			var date=array[i].TIME.getFullYear() + "-" + (array[i].TIME.getMonth() + 1) + "-" + array[i].TIME.getDate();
