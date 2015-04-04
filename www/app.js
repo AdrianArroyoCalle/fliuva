@@ -40,7 +40,7 @@ function usersPerDay(){
 			else
 				y=dataset.get(date).y+1;
 			
-			dataset.update({x: date, id: date, y: y);
+			dataset.update({x: date, id: date, y: y});
 		}
 		/*var dataset=new vis.DataSet();
 		dataset.add("2015-04-03");
