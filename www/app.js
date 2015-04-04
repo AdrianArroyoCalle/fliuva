@@ -22,20 +22,21 @@ function usersPerDay(){
 	xhr.open("GET","/get");
 	xhr.addEventListener("load",function(){
 		var json=JSON.parse(xhr.responseText);
+		var dataset=new vis.DataSet();
 		/*var data=json.filter(function(){
 			
 		});*/
-		/*var array=uniqBy(json,"SESSION"); // Eventos de sesiones repetidas eliminados (mismos usuarios). Ahora tenemos sesiones únicas y tiempos distintos
-		for(var i=;i<array.length;i++)
+		var array=uniqBy(json,"SESSION"); // Eventos de sesiones repetidas eliminados (mismos usuarios). Ahora tenemos sesiones únicas y tiempos distintos
+		for(var i=0;i<array.length;i++)
 		{
 			var date=array[i].TIME.getFullYear() + "-" + (array[i].TIME.getMonth() + 1) + "-" + array[i].TIME.getDate();
-			var dataset=new vis.DataSet();
-			dataset.add(date);
-		}  */
-		var dataset=new vis.DataSet();
+			
+			dataset.update({x: date, id: date, y: (dataset.get(date).y++) || 1});
+		}
+		/*var dataset=new vis.DataSet();
 		dataset.add("2015-04-03");
 		dataset.add("2015-04-03");
-		dataset.add("2014-09-25");
+		dataset.add("2014-09-25");*/
 		var options = {
 			start: '2014-06-10',
 			end: '2015-06-18'
