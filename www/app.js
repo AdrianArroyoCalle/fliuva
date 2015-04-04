@@ -38,7 +38,7 @@ function usersPerDay(){
 		for(var i=0;i<array.length;i++)
 		{
 			var time=new Date(array[i].TIME);
-			var date=ISODateString(time);
+			var date=ISODateString(time); //time.toISOString().substring(0,time.toISOString().indexOf("T"));
 			
 			var y;
 			if(dataset.get(date)==null)
@@ -49,13 +49,7 @@ function usersPerDay(){
 			console.log(date);
 			dataset.update({x: date, id: date, y: y});
 		}
-		/*var dataset=new vis.DataSet();
-		dataset.add("2015-04-03");
-		dataset.add("2015-04-03");
-		dataset.add("2014-09-25");*/
 		var options = {
-			start: '2014-06-10',
-			end: '2015-06-18',
 			catmullRom: false
 		};
 		var graph2d = new vis.Graph2d(id("users-per-day"), dataset, options);
