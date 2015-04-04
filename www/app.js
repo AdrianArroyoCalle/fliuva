@@ -31,6 +31,7 @@ function usersPerDay(){
 		}); // Eventos de sesiones repetidas eliminados (mismos usuarios). Ahora tenemos sesiones únicas y tiempos distintos
 		for(var i=0;i<array.length;i++)
 		{
+			console.dir(array[i]);
 			var date=array[i].TIME.getFullYear() + "-" + (array[i].TIME.getMonth() + 1) + "-" + array[i].TIME.getDate();
 			
 			dataset.update({x: date, id: date, y: (dataset.get(date).y++) || 1});
