@@ -40,6 +40,7 @@ function usersPerDay(){
 			else
 				y=dataset.get(date).y+1;
 			
+			console.log(date);
 			dataset.update({x: date, id: date, y: y});
 		}
 		/*var dataset=new vis.DataSet();
