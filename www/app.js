@@ -14,6 +14,12 @@ function uniqBy(a, key) {
         return seen.hasOwnProperty(k) ? false : (seen[k] = true);
     })
 }
+function ISODateString(d){
+ function pad(n){return n<10 ? '0'+n : n}
+ return d.getUTCFullYear()+'-'
+      + pad(d.getUTCMonth()+1)+'-'
+      + pad(d.getUTCDate());
+}
 
 /* Users-per-day */
 function usersPerDay(){
@@ -32,7 +38,7 @@ function usersPerDay(){
 		for(var i=0;i<array.length;i++)
 		{
 			var time=new Date(array[i].TIME);
-			var date=time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
+			var date=ISODateString(time);
 			
 			var y;
 			if(dataset.get(date)==null)
@@ -49,7 +55,8 @@ function usersPerDay(){
 		dataset.add("2014-09-25");*/
 		var options = {
 			start: '2014-06-10',
-			end: '2015-06-18'
+			end: '2015-06-18',
+			catmullRom: false
 		};
 		var graph2d = new vis.Graph2d(id("users-per-day"), dataset, options);
 	});
