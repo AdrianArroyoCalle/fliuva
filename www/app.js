@@ -34,7 +34,13 @@ function usersPerDay(){
 			var time=new Date(array[i].TIME);
 			var date=time.getFullYear() + "-" + (time.getMonth() + 1) + "-" + time.getDate();
 			
-			dataset.update({x: date, id: date, y: (dataset.get(date).y++) || 1});
+			var y;
+			if(dataset.get(date)==null)
+				y=1;
+			else
+				y=dataset.get(date).y+1;
+			
+			dataset.update({x: date, id: date, y: y);
 		}
 		/*var dataset=new vis.DataSet();
 		dataset.add("2015-04-03");
