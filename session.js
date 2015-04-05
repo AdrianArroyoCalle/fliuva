@@ -12,6 +12,6 @@ module.exports=function(req,res){
 	connection.query("SELECT * FROM EVENTS WHERE SESSION = ?",[session],function(err,results){
 		if(err)
 			res.send(502,"Error: "+err);
-		res.render("jade/session.jade",{events: results});
+		res.render("jade/session",{events: results});
 	});
 }
