@@ -65,7 +65,10 @@ function sessionsTable(){
 	var xhr=new XMLHttpRequest();
 	xhr.open("GET","/get");
 	xhr.addEventListener("load",function(){
-		var data=JSON.parse(xhr.responseText);
+		var json=JSON.parse(xhr.responseText);
+		var data=uniqBy(json,function(item){
+			return item.SESSION;
+		});
 		for(var i=0;i<data.length;i++)
 		{
 			var item=data[i];
