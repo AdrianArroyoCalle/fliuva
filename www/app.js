@@ -1,6 +1,7 @@
 /* Visualization App */
 window.addEventListener("load",function(){
 	usersPerDay();
+	sessionsTable();
 });
 
 function id(idx){
@@ -53,9 +54,32 @@ function usersPerDay(){
 			catmullRom: false
 		};
 		var graph2d = new vis.Graph2d(id("users-per-day"), dataset, options);
-		graph2d.on("select",function(evt){
-			console.dir(evt);
-		});
+	});
+	xhr.send();
+}
+
+/* Table for sessions */
+
+function sessionsTable(){
+	var table=document.getElementById("sessions");
+	var xhr=new XMLHttpRequest();
+	xhr.open("GET","/get");
+	xhr.addEventListener("load",function(){
+		var data=JSON.parse(xhr.responseText);
+		for(var i=0;i<data.length;i++)
+		{
+			var tr=document.createElement("tr");
+			var time=document.createElement("td");
+			time.textContent=data.TIME;
+			var session=document.createElement("td");
+			var link=document.createElement("a");
+			link.href="/session/"+data.SESSION;
+			link.textContent=data.SESSION;
+			session.appendChild(link);
+			tr.appendChild(time);
+			tr.appendChild(session);
+			table.appendChild(tr);
+		}
 	});
 	xhr.send();
 }
