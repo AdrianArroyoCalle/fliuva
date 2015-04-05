@@ -2,9 +2,16 @@ var express=require("express");
 var mysql=require("mysql");
 var collect=require("./collect");
 var getdata=require("./getdata");
+var session=require("./session");
 var uuid=require("node-uuid");
 
 var app=express();
+
+app.set("view engine","jade");
+
+app.get("/",function(req,res){
+	res.render("jade/index.jade");
+});
 
 app.get("/collect",collect);
 
@@ -17,6 +24,8 @@ app.get("/all",function(req,res){
 app.get("/uuid",function(req,res){
 	res.send(uuid.v4());
 });
+
+app.get("/session/:session",session);
 
 app.use(express.static("www"));
 

@@ -1,0 +1,23 @@
+doctype html
+html
+	head
+		title Vista de sesión
+		meta(charset="utf-8")
+	body
+		h1 Vista de sesión
+		table
+			tr
+				th Categoría
+				th Subcategoría
+				th Nombre
+				th Descripción
+				th Datos
+				th Tiempo
+			each event in events
+				tr
+					td event.CATEGORY
+					td event.SUBCATEGORY
+					td event.NAME
+					td event.DESCRIPTION
+					td event.DATA
+					td event.TIME

@@ -53,6 +53,9 @@ function usersPerDay(){
 			catmullRom: false
 		};
 		var graph2d = new vis.Graph2d(id("users-per-day"), dataset, options);
+		graph2d.on("click",function(evt){
+			console.dir(evt.value);
+		});
 	});
 	xhr.send();
 }
