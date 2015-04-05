@@ -27,7 +27,8 @@
     "mysql": "~2.6.1",
     "node-uuid": "~1.4.3",
     "jade": "~1.9.2",
-    "newrelic": "~1.18.1"
+    "newrelic": "~1.18.1",
+    "html-pdf": "~1.1.0"
   },
   "devDependencies": {},
   "bundleDependencies": [],
