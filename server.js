@@ -1,3 +1,4 @@
+require("newrelic");
 var express=require("express");
 var mysql=require("mysql");
 var collect=require("./collect");
