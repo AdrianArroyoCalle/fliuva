@@ -7,6 +7,7 @@ var uuid=require("node-uuid");
 
 var app=express();
 
+app.set("views",__dirname + "/jade");
 app.set("view engine","jade");
 
 app.get("/collect",collect);
