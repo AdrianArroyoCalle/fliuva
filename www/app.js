@@ -68,13 +68,14 @@ function sessionsTable(){
 		var data=JSON.parse(xhr.responseText);
 		for(var i=0;i<data.length;i++)
 		{
+			var item=data[i];
 			var tr=document.createElement("tr");
 			var time=document.createElement("td");
-			time.textContent=data.TIME;
+			time.textContent=item.TIME;
 			var session=document.createElement("td");
 			var link=document.createElement("a");
-			link.href="/session/"+data.SESSION;
-			link.textContent=data.SESSION;
+			link.href="/session/"+item.SESSION;
+			link.textContent=item.SESSION;
 			session.appendChild(link);
 			tr.appendChild(time);
 			tr.appendChild(session);
