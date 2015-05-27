@@ -1,9 +1,11 @@
 var FLIUVA=new Object;
+var CHART=new Object;
 
 /* Visualization App */
 window.addEventListener("load",function(){
 	//oldUsersPerDay();
-	usersPerDay();
+	CHART.usersPerDay();
+	CHART.mostUsedLanguagesAlways();
 	sessionsTable();
 });
 
@@ -87,6 +89,16 @@ FLIUVA.getTimes=function(json){
 	return timeSteps;
 }
 
+FLIUVA.get=function(raw,CATEGORY,SUBCATEGORY){
+	var languages=raw.filter(function(item){
+		if(item.CATEGORY === CATEGORY)
+			if(item.SUBCATEGORY === SUBCATEGORY)
+				return true;
+		return false;
+	});
+	return languages;
+}
+
 FLIUVA.buildData=function(){
 	var data=new Object;
 	data.labels=new Array;
@@ -112,7 +124,11 @@ FLIUVA.forEachDay=function(json,sessions,cb){
 	}
 }
 
-function usersPerDay(){
+FLIUVA.createChart=function(id,name){
+	// DO DOM THINGS HEER
+}
+
+CHART.usersPerDay=function(){
 	FLIUVA.downloadData(function(json){
 		var data=FLIUVA.buildData();
 		FLIUVA.forEachDay(json,FLIUVA.getSessions(json),function(time,result){
@@ -122,7 +138,33 @@ function usersPerDay(){
 		var options = {
 		  lineSmooth: false
 		};
-		new Chartist.Line(".ct-chart",data,options);
+		new Chartist.Line("#users-per-day",data,options);
+	});
+}
+
+CHART.mostUsedLanguagesAlways=function(){
+	FLIUVA.downloadData(function(raw){
+		var data=FLIUVA.buildData();
+		var languages=FLIUVA.get(raw,"DEMOGRAPHIC","LANGUAGE");
+		var sessions=FLIUVA.getSessions(languages);
+		
+		var temp={};
+		// Las sesiones son de idioma y son únicas
+		for(var i=0;i<sessions.length;i++){
+			if(temp[sessions[i].NAME]){
+				temp[sessions[i].NAME].count++;
+			}else{
+				temp[sessions[i].NAME]={};
+				temp[sessions[i].NAME].count=1;
+			}
+		}
+		// temp ahora contiene los idiomas agrupados y su número
+		
+		for(var t in temp){
+			data.labels.push(t);
+			data.series[0].push(temp[t].count);
+		}
+		new Chartist.Bar("#idioms-more-used-forever",data);
 	});
 }
 
