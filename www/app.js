@@ -1,6 +1,8 @@
+var FLIUVA=new Object;
+
 /* Visualization App */
 window.addEventListener("load",function(){
-	oldUsersPerDay();
+	//oldUsersPerDay();
 	usersPerDay();
 	sessionsTable();
 });
@@ -59,49 +61,69 @@ function oldUsersPerDay(){
 	xhr.send();
 }
 
-function usersPerDay(){
+FLIUVA.downloadData=function(cb){
 	var xhr=new XMLHttpRequest();
 	xhr.overrideMimeType("application/json");
 	xhr.open("GET","/get");
 	xhr.addEventListener("load",function(){
 		var json=JSON.parse(xhr.responseText);
-		var array=uniqBy(json,function(item){
-			return item.SESSION;
-		});
-		var timeSteps=uniqBy(json,function(item){
-			var time=new Date(item.TIME);
-			return ISODateString(time);
-		});
-		var data={};
-		data.labels=[];
-		data.series=[];
-		data.series[0]=[];
-		for(var i=0;i<timeSteps.length;i++){
-			var time2=new Date(timeSteps[i].TIME);
-			var ok=array.filter(function(item){
-				var time1=new Date(item.TIME);
-				if(ISODateString(time1)===ISODateString(time2)){
-					return true;
-				}else{
-					return false;
-				}
-			});
-			data.labels.push(ISODateString(time2));
-			data.series[0].push(ok.length);
-		}
-		/*for(var i=0;i<array.length;i++){
-			var time=new Date(array[i].TIME);
-			var date=ISODateString(time);
-			//FILTRO DE TODO
-		}*/
-		  var options = {
-			  width: 300,
-			  height: 200,
-			  lineSmooth: false
-			};
-		new Chartist.Line(".ct-chart",data,options);
+		cb(json);
 	});
 	xhr.send();
+}
+
+FLIUVA.getSessions=function(json){
+	var array=uniqBy(json,function(item){
+		return item.SESSION;
+	});
+	return array;
+}
+
+FLIUVA.getTimes=function(json){
+	var timeSteps=uniqBy(json,function(item){
+		var time=new Date(item.TIME);
+		return ISODateString(time);
+	});
+	return timeSteps;
+}
+
+FLIUVA.buildData=function(){
+	var data=new Object;
+	data.labels=new Array;
+	data.series=new Array;
+	data.series[0]=new Array;
+	return data;
+}
+
+FLIUVA.forEachDay=function(json,sessions,cb){
+	var timeSteps=FLIUVA.getTimes(json);
+	for(var i=0;i<timeSteps.length;i++)
+	{
+		var time=new Date(timeSteps[i].TIME);
+		var ok=sessions.filter(function(item){
+			var time1=new Date(item.TIME);
+			if(ISODateString(time1)===ISODateString(time)){
+				return true;
+			}else{
+				return false;
+			}
+		});
+		cb(time,ok);
+	}
+}
+
+function usersPerDay(){
+	FLIUVA.downloadData(function(json){
+		var data=FLIUVA.buildData();
+		FLIUVA.forEachDay(json,FLIUVA.getSessions(json),function(time,result){
+			data.labels.push(ISODateString(time));
+			data.series[0].push(result.length);
+		});
+		var options = {
+		  lineSmooth: false
+		};
+		new Chartist.Line(".ct-chart",data,options);
+	});
 }
 
 /* Table for sessions */
