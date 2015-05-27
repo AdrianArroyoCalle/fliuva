@@ -69,21 +69,24 @@ function usersPerDay(){
 			return item.SESSION;
 		});
 		var timeSteps=uniqBy(json,function(item){
-			return item.TIME;
+			var time=new Date(item.TIME);
+			return ISODateString(time);
 		});
 		var data={};
 		data.labels=[];
 		data.series=[];
 		data.series[0]=[];
 		for(var i=0;i<timeSteps.length;i++){
+			var time2=new Date(timeSteps[i].TIME);
 			var ok=array.filter(function(item){
-				if(item.TIME===timeSteps[i].TIME){
+				var time1=new Date(item.TIME);
+				if(ISODateString(time1)===ISODateString(time2)){
 					return true;
 				}else{
 					return false;
 				}
 			});
-			data.labels.push(timeSteps[i].TIME);
+			data.labels.push(ISODateString(time2));
 			data.series[0].push(ok.length);
 		}
 		/*for(var i=0;i<array.length;i++){
