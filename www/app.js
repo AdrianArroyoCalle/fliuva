@@ -72,8 +72,9 @@ function usersPerDay(){
 			return item.TIME;
 		});
 		var data={};
-		data.labels={};
-		data.series={};
+		data.labels=[];
+		data.series=[];
+		data.series[0]=[];
 		for(var i=0;i<timeSteps.length;i++){
 			var ok=array.filter(function(item){
 				if(item.TIME===timeSteps[i].TIME){
@@ -83,7 +84,7 @@ function usersPerDay(){
 				}
 			});
 			data.labels.push(timeSteps[i].TIME);
-			data.series.push(ok.length);
+			data.series[0].push(ok.length);
 		}
 		/*for(var i=0;i<array.length;i++){
 			var time=new Date(array[i].TIME);
