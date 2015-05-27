@@ -168,6 +168,7 @@ CHART.mostUsedLanguagesAlways=function(){
 			data.labels.push(t);
 			data.series[0].push(temp[t].count);
 		}
+		console.log(data);
 		new Chartist.Pie("#idioms-more-used-forever",data);
 	});
 }
