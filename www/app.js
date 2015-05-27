@@ -93,6 +93,7 @@ function usersPerDay(){
 		}*/
 		new Chartist.Line(".ct-chart",data);
 	});
+	xhr.send();
 }
 
 /* Table for sessions */
