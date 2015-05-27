@@ -103,7 +103,6 @@ FLIUVA.buildData=function(){
 	var data=new Object;
 	data.labels=new Array;
 	data.series=new Array;
-	data.series[0]=new Array;
 	return data;
 }
 
@@ -131,6 +130,7 @@ FLIUVA.createChart=function(id,name){
 CHART.usersPerDay=function(){
 	FLIUVA.downloadData(function(json){
 		var data=FLIUVA.buildData();
+		data.series[0]=[];
 		FLIUVA.forEachDay(json,FLIUVA.getSessions(json),function(time,result){
 			data.labels.push(ISODateString(time));
 			data.series[0].push(result.length);
