@@ -91,7 +91,12 @@ function usersPerDay(){
 			var date=ISODateString(time);
 			//FILTRO DE TODO
 		}*/
-		new Chartist.Line(".ct-chart",data);
+		  var options = {
+			  width: 300,
+			  height: 200,
+			  lineSmooth: false
+			};
+		new Chartist.Line(".ct-chart",data,options);
 	});
 	xhr.send();
 }
