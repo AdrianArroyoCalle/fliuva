@@ -146,7 +146,9 @@ CHART.mostUsedLanguagesAlways=function(){
 	FLIUVA.downloadData(function(raw){
 		var data=FLIUVA.buildData();
 		var languages=FLIUVA.get(raw,"DEMOGRAPHIC","LANGUAGE");
+		console.log(languages);
 		var sessions=FLIUVA.getSessions(languages);
+		console.log(sessions);
 		
 		var temp={};
 		// Las sesiones son de idioma y son únicas
@@ -158,6 +160,8 @@ CHART.mostUsedLanguagesAlways=function(){
 				temp[sessions[i].NAME].count=1;
 			}
 		}
+		
+		console.log(temp);
 		// temp ahora contiene los idiomas agrupados y su número
 		
 		for(var t in temp){
