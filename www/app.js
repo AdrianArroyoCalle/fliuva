@@ -1,5 +1,6 @@
 /* Visualization App */
 window.addEventListener("load",function(){
+	oldUsersPerDay();
 	usersPerDay();
 	sessionsTable();
 });
@@ -23,7 +24,7 @@ function ISODateString(d){
 }
 
 /* Users-per-day */
-function usersPerDay(){
+function oldUsersPerDay(){
 	var xhr=new XMLHttpRequest();
 	xhr.overrideMimeType("application/json");
 	xhr.open("GET","/get");
@@ -56,6 +57,41 @@ function usersPerDay(){
 		var graph2d = new vis.Graph2d(id("users-per-day"), dataset, options);
 	});
 	xhr.send();
+}
+
+function usersPerDay(){
+	var xhr=new XMLHttpRequest();
+	xhr.overrideMimeType("application/json");
+	xhr.open("GET","/get");
+	xhr.addEventListener("load",function(){
+		var json=JSON.parse(xhr.responseText);
+		var array=uniqBy(json,function(item){
+			return item.SESSION;
+		});
+		var timeSteps=uniqBy(json,function(item){
+			return item.TIME;
+		});
+		var data={};
+		data.labels={};
+		data.series={};
+		for(var i=0;i<timeSteps.length;i++){
+			var ok=array.filter(function(item){
+				if(item.TIME===timeSteps[i].TIME){
+					return true;
+				}else{
+					return false;
+				}
+			});
+			data.labels.push(timeSteps[i].TIME);
+			data.series.push(ok.length);
+		}
+		/*for(var i=0;i<array.length;i++){
+			var time=new Date(array[i].TIME);
+			var date=ISODateString(time);
+			//FILTRO DE TODO
+		}*/
+		new Chartist.Line(".ct-chart",data);
+	});
 }
 
 /* Table for sessions */
