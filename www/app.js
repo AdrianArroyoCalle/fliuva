@@ -91,7 +91,6 @@ FLIUVA.getTimes=function(json){
 
 FLIUVA.get=function(raw,CATEGORY,SUBCATEGORY){
 	var languages=raw.filter(function(item){
-		console.log("Reading :"+item.CATEGORY + "-"+item.SUBCATEGORY);
 		if(item.CATEGORY == CATEGORY)
 			if(item.SUBCATEGORY == SUBCATEGORY)
 				return true;
@@ -169,7 +168,7 @@ CHART.mostUsedLanguagesAlways=function(){
 			data.labels.push(t);
 			data.series[0].push(temp[t].count);
 		}
-		new Chartist.Bar("#idioms-more-used-forever",data);
+		new Chartist.Pie("#idioms-more-used-forever",data);
 	});
 }
 
