@@ -91,8 +91,9 @@ FLIUVA.getTimes=function(json){
 
 FLIUVA.get=function(raw,CATEGORY,SUBCATEGORY){
 	var languages=raw.filter(function(item){
-		if(item.CATEGORY === CATEGORY)
-			if(item.SUBCATEGORY === SUBCATEGORY)
+		console.log("Reading :"+item.CATEGORY + "-"+item.SUBCATEGORY);
+		if(item.CATEGORY == CATEGORY)
+			if(item.SUBCATEGORY == SUBCATEGORY)
 				return true;
 		return false;
 	});
